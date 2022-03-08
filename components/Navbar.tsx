@@ -5,40 +5,13 @@ import withApollo from "lib/withApollo";
 import Image from "next/image";
 import Link from "next/link";
 import useTheme from "lib/hooks/useTheme";
+import { themes } from "lib/constants";
 
 const Navbar = () => {
   const router = useRouter();
   const { data, loading, error } = useMeQuery();
   const [mutationLogOut] = useLogOutMutation();
   const { setTheme } = useTheme();
-  const themes = [
-    "light",
-    "dark",
-    "cupcake",
-    "bumblebee",
-    "emerald",
-    "corporate",
-    "synthwave",
-    "retro",
-    "cyberpunk",
-    "valentine",
-    "halloween",
-    "garden",
-    "forest",
-    "aqua",
-    "lofi",
-    "pastel",
-    "fantasy",
-    "wireframe",
-    "black",
-    "luxury",
-    "dracula",
-    "cmyk",
-    "autumn",
-    "business",
-    "acid",
-    "lemonade",
-  ];
 
   let body;
   if (loading)
@@ -72,16 +45,22 @@ const Navbar = () => {
                 ? `https://cdn.discordapp.com/avatars/${data.me.uid}/${data.me.avatar}.webp`
                 : "https://cdn.discordapp.com/embed/avatars/0.png"
             }
-            width="42px"
-            height="42px"
+            width="38px"
+            height="38px"
           />
         </label>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 bg-base-300 shadow rounded-box w-52"
+          className="dropdown-content menu menu-compact p-2 bg-base-300 shadow rounded-box w-52"
         >
           <li>
             <Link href="/dashboard">Dashboard</Link>
+          </li>
+          <li className="lg:hidden">
+            <Link href="/commands">Commands</Link>
+          </li>
+          <li className="lg:hidden">
+            <Link href="/invite">Invite Enma</Link>
           </li>
           <li>
             <p
@@ -107,6 +86,16 @@ const Navbar = () => {
             <Link href="/" passHref>
               <p className="font-semibold text-xl cursor-pointer">bliss</p>
             </Link>
+          </div>
+          <div className="navbar-center">
+            <ul className="lg:flex gap-5  md:hidden sm:hidden hidden">
+              <Link href="/commands" passHref>
+                <li className="link link-hover link-primary">Commands</li>
+              </Link>
+              <Link href="/invite" passHref>
+                <li className="link link-hover link-primary">Invite Enma</li>
+              </Link>
+            </ul>
           </div>
           <div className="navbar-end">
             <div className="dropdown dropdown-end mr-5">

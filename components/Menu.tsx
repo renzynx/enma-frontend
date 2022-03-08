@@ -1,19 +1,24 @@
 import { GuildsQuery } from "generated/graphql";
-import { GuildContext } from "lib/context";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { FC, useContext } from "react";
 
 const Menu: FC<GuildsQuery> = ({ guilds }) => {
-  const { setGuild } = useContext(GuildContext);
   const router = useRouter();
+
+  if (!guilds?.included && !guilds?.excluded)
+    return (
+      <div className="my-20 text-2xl text-center">
+        You don&quot;t have any guild available, you can try to create one and
+        come back here.
+      </div>
+    );
 
   return (
     <div className="gap-5 mt-10 flex flex-col mx-10 my-20">
       {guilds &&
         guilds.included.map(({ id, name, icon }, index) => (
           <div
-            onClick={() => setGuild({ id, name, icon })}
             key={index}
             className="shadow-lg outline-2 outline-offset-2 shadow-base-300 border-t-4 border-t-base-300 box-border flex flex-row items-center justify-between p-5  border-opacity-30 rounded-md"
           >
@@ -58,7 +63,7 @@ const Menu: FC<GuildsQuery> = ({ guilds }) => {
               height="80px"
             />
             <p className="text-center text-lg font-semibold">{name}</p>
-            <button className="btn btn-error">Invite</button>
+            <button className="btn btn-error">Invite Enma</button>
           </div>
         ))}
     </div>

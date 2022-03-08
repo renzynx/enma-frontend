@@ -1,19 +1,15 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { PartialGuild } from "lib/types";
-import { useState } from "react";
-import { GuildContext } from "lib/context";
+import NProgress from "nprogress";
+import Router from "next/router";
+
+NProgress.configure({ showSpinner: false });
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [guild, setGuild] = useState<PartialGuild>();
-
-  const updateGuild = (guild: PartialGuild) => setGuild(guild);
-
-  return (
-    <GuildContext.Provider value={{ guild, setGuild: updateGuild }}>
-      <Component {...pageProps} />
-    </GuildContext.Provider>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

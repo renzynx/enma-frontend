@@ -7,7 +7,6 @@ import { Track } from "lib/types";
 import withApollo from "lib/withApollo";
 import { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MoonLoader } from "react-spinners";
@@ -17,6 +16,7 @@ let socket: any = false;
 
 const Music: NextPage<{ data: any }> = ({ data }) => {
   useAuth();
+  const [title, setTitle] = useState("");
   const [track, setTrack] = useState<Track>();
   const [lyric, setLyric] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,10 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
   }, [router]);
   useEffect(() => {
     socket.emit("playing", id);
-    socket.on(id, (track: Track) => track && setTrack(track));
+    socket.on(id, (track: Track) => {
+      track && setTrack(track);
+      track && setTitle(track.title);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -50,7 +53,7 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
   return (
     <>
       <Head>
-        <title>Music Dashboard</title>
+        <title>Enma | Music Dashboard</title>
       </Head>
       <Navbar />
       <div className="mx-auto grid place-items-center my-20">
@@ -73,7 +76,7 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
                   <button
                     className={`btn btn-primary`}
                     onClick={() => fetchLyric(track.title)}
-                    disabled={!!lyric}
+                    disabled={!!lyric && title === track.title}
                   >
                     View Lyric
                   </button>
