@@ -54,7 +54,9 @@ const Navbar = () => {
   if (error)
     body = (
       <button
-        onClick={() => (window.location.href = "http://localhost:42069/login")}
+        onClick={() =>
+          (window.location.href = `${process.env.NEXT_PUBLIC_BACKEND}/login`)
+        }
         className="btn btn-primary"
       >
         Login
