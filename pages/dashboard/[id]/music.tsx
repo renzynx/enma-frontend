@@ -28,10 +28,7 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
   }, [router]);
   useEffect(() => {
     socket.emit("playing", id);
-    socket.on(id, (track: Track) => {
-      track && setTrack(track);
-      track && setTitle(track.title);
-    });
+    socket.on(id, (track: Track) => track && setTrack(track));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,7 +73,7 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
                   <button
                     className={`btn btn-primary`}
                     onClick={() => fetchLyric(track.title)}
-                    disabled={!!lyric && title === track.title}
+                    disabled={loading}
                   >
                     View Lyric
                   </button>
@@ -86,11 +83,7 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
             <div>
               {lyric ? (
                 <div className="flex justify-center whitespace-pre-line text-center text-lg my-20">
-                  {loading ? (
-                    <MoonLoader loading={true} color="white" />
-                  ) : (
-                    lyric
-                  )}
+                  {lyric}
                 </div>
               ) : (
                 ""
