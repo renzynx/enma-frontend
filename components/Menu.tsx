@@ -1,5 +1,6 @@
 import { GuildsQuery } from "generated/graphql";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useContext } from "react";
 
@@ -63,7 +64,12 @@ const Menu: FC<GuildsQuery> = ({ guilds }) => {
               height="80px"
             />
             <p className="text-center text-lg font-semibold">{name}</p>
-            <button className="btn btn-error">Invite Enma</button>
+            <Link
+              href={`https://discord.com/api/oauth2/authorize?client_id=772690931539247104&permissions=137475968320&redirect_uri=https%3A%2F%2Fbackend.renzynx.space%2Flogin%2Fcallback&response_type=code&scope=bot%20identify%20guilds&guild_id=${id}`}
+              passHref
+            >
+              <button className="btn btn-error">Invite Enma</button>
+            </Link>
           </div>
         ))}
     </div>
