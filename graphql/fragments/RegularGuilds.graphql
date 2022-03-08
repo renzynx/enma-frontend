@@ -1,0 +1,12 @@
+fragment RegularGuilds on MutualGuilds {
+  included {
+    id
+    name
+    icon
+  }
+  excluded {
+    id
+    name
+    icon
+  }
+}

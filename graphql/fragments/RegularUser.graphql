@@ -1,0 +1,6 @@
+fragment RegularUser on UserInfo {
+  id
+  uid
+  username
+  avatar
+}
