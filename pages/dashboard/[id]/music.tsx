@@ -1,5 +1,6 @@
 import Controller from "@components/Controller";
 import Navbar from "@components/Navbar";
+import Slider from "@components/Slider";
 import YoutubeEmbed from "@components/Youtube";
 import axios from "axios";
 import useAuth from "lib/hooks/useAuth";
@@ -8,15 +9,13 @@ import withApollo from "lib/withApollo";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { MoonLoader } from "react-spinners";
+import { useEffect, useState, useMemo } from "react";
 import io from "socket.io-client";
 
 let socket: any = false;
 
 const Music: NextPage<{ data: any }> = ({ data }) => {
   useAuth();
-  const [title, setTitle] = useState("");
   const [track, setTrack] = useState<Track>();
   const [lyric, setLyric] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,12 +27,15 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
   }, [router]);
   useEffect(() => {
     socket.emit("playing", id);
-    socket.on(id, (track: Track) => track && setTrack(track));
+    socket.on(id, (track: Track) => {
+      track && setTrack(track);
+      track && setTimeout(() => setLyric(""), track.duration - track.position);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchLyric = (title: string) => {
-    setLoading(true);
+    !lyric && setLoading(true);
     !lyric &&
       axios
         .get(
@@ -44,8 +46,16 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
   };
 
   const handlePlayback = () => socket.emit("playback", id);
-  const handleSkip = () => socket.emit("skip", id);
-  const handlePrevious = () => socket.emit("previous", id);
+  const handleSkip = () => {
+    socket.emit("skip", id);
+    setLyric("");
+  };
+  const handlePrevious = () => {
+    socket.emit("previous", id);
+    setLyric("");
+  };
+  const handleVolume = (volume: string) =>
+    socket.emit("volume", { id, volume });
 
   return (
     <>
@@ -71,15 +81,15 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
                 <p>{track.author}</p>
                 <div className="card-actions justify-end">
                   <button
-                    className={`btn btn-primary`}
+                    className={`btn btn-primary ${loading ? "loading" : ""}`}
                     onClick={() => fetchLyric(track.title)}
-                    disabled={loading}
                   >
                     View Lyric
                   </button>
                 </div>
               </div>
             </div>
+            <Slider handleVolume={handleVolume} />
             <div>
               {lyric ? (
                 <div className="flex justify-center whitespace-pre-line text-center text-lg my-20">

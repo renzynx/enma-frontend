@@ -84,7 +84,7 @@ const Navbar = () => {
         <nav className="navbar mx-auto max-w-[90%]">
           <div className="navbar-start">
             <Link href="/" passHref>
-              <p className="font-semibold text-xl cursor-pointer">bliss</p>
+              <p className="font-semibold text-2xl cursor-pointer">Enma</p>
             </Link>
           </div>
           <div className="navbar-center">
