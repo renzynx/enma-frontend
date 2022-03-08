@@ -24,7 +24,7 @@ const Music: NextPage<{ data: any }> = ({ data }) => {
 
   const { id } = data;
   useEffect(() => {
-    if (!socket) socket = io("http://localhost:6900");
+    if (!socket) socket = io(process.env.NEXT_PUBLIC_WS!);
   }, [router]);
   useEffect(() => {
     socket.emit("playing", id);
