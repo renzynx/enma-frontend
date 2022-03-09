@@ -17,12 +17,8 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
   const uid = useAuth();
   const [data, setData] = useState<SocketData>();
   const router = useRouter();
-  const MusicCard = dynamic(() => import("@components/MusicCard"), {
-    ssr: typeof window === "undefined",
-  });
-  const SearchForm = dynamic(() => import("@components/SearchForm"), {
-    ssr: typeof window === "undefined",
-  });
+  const MusicCard = dynamic(() => import("@components/MusicCard"));
+  const SearchForm = dynamic(() => import("@components/SearchForm"));
   const Slider = dynamic(() => import("@components/Slider"));
 
   const { id } = query;
@@ -30,7 +26,7 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
     if (!socket) socket = io(process.env.NEXT_PUBLIC_WS!);
   }, [router]);
   useEffect(() => {
-    socket.emit("playing", { id, uid });
+    socket.emit("playing", id);
     socket.on(id, (data: SocketData) => data && setData(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -52,7 +48,7 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
       <div className="mx-auto grid place-items-center mt-10 mb-20">
         {data && data.track ? (
           <>
-            <MusicCard track={data.track} />
+            <MusicCard track={data} />
             <Slider
               handleVolume={handleVolume}
               defaultVol={data.defaultVolume}
@@ -61,7 +57,7 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
         ) : (
           <div className="text-center text-3xl mb-20">No track playing.</div>
         )}
-        {data?.player ? (
+        {data ? (
           <SearchForm play={handlePlay} />
         ) : (
           <p className="text-xl">

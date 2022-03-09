@@ -1,7 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import { SearchProps, YoutubeVideo } from "lib/types";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { FC, useState } from "react";
 import { BarLoader } from "react-spinners";
 
@@ -10,8 +9,6 @@ const SearchForm: FC<{ play: (url: string) => void }> = ({ play }) => {
   const [results, setResults] = useState<YoutubeVideo[]>([]);
   const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const router = useRouter();
 
   return (
     <div className="mb-10">
@@ -20,12 +17,10 @@ const SearchForm: FC<{ play: (url: string) => void }> = ({ play }) => {
         onSubmit={async (values, actions) => {
           if (!values.query) return;
           setLoading(true);
-          const res = await fetch("/api/search?query=" + values.query).finally(
-            () => setLoading(false)
-          );
-          const data: YoutubeVideo[] = await res.json();
-          setLoading(false);
-          console.log(data);
+          const res = await fetch("/api/search?query=" + values.query);
+          const data: YoutubeVideo[] = await res
+            .json()
+            .finally(() => setLoading(false));
           setResults(data);
           actions.setSubmitting(false);
         }}
@@ -60,40 +55,38 @@ const SearchForm: FC<{ play: (url: string) => void }> = ({ play }) => {
           <BarLoader width="100%" loading={loading} color="#6377f7" />
         ) : (
           results.map((item, index) => (
-            <div
-              key={index}
-              className="card card-compact lg:w-96 md:w-96 sm:w-[98vw] w-[98vw] bg-base-100 shadow-xl mx-auto"
-            >
-              <figure>
-                <Modal track={title} />
-                <Image
-                  src={
-                    (item.bestThumbnail && item.bestThumbnail.url) ??
-                    "https://api.lorem.space/image/album?w=400&h=225"
-                  }
-                  alt="Youtube Thumbnail"
-                  width="400px"
-                  height="225px"
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{item.title}</h2>
-                <p>{item.author && item.author.name}</p>
-                <div className="card-actions justify-end">
-                  <label
-                    htmlFor="my-modal"
-                    className={`btn btn-primary ${
-                      buttonLoading ? "cursor-not-allowed btn-disabled" : ""
-                    }`}
-                    onClick={() => {
-                      play(item.url);
-                      setTitle(item.title);
-                      setButtonLoading(true);
-                      setTimeout(() => setButtonLoading(false), 5000);
-                    }}
-                  >
-                    Add to queue
-                  </label>
+            <div key={index}>
+              <Modal track={item.title} />
+              <div className="card card-compact lg:w-96 md:w-96 sm:w-[98vw] w-[98vw] bg-base-100 shadow-xl mx-auto">
+                <figure>
+                  <Image
+                    src={
+                      (item.bestThumbnail && item.bestThumbnail.url) ??
+                      "https://api.lorem.space/image/album?w=400&h=225"
+                    }
+                    alt="Youtube Thumbnail"
+                    width="400px"
+                    height="225px"
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">{item.title}</h2>
+                  <p>{item.author && item.author.name}</p>
+                  <div className="card-actions justify-end">
+                    <label
+                      htmlFor="my-modal"
+                      className={`btn btn-primary ${
+                        buttonLoading ? "cursor-not-allowed btn-disabled" : ""
+                      }`}
+                      onClick={() => {
+                        play(item.url);
+                        setButtonLoading(true);
+                        setTimeout(() => setButtonLoading(false), 1500);
+                      }}
+                    >
+                      Add to queue
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -103,6 +96,8 @@ const SearchForm: FC<{ play: (url: string) => void }> = ({ play }) => {
     </div>
   );
 };
+
+export default SearchForm;
 
 const Modal: FC<{ track: string | null }> = ({ track }) => (
   <>
@@ -123,5 +118,3 @@ const Modal: FC<{ track: string | null }> = ({ track }) => (
     </div>
   </>
 );
-
-export default SearchForm;

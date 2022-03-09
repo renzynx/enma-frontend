@@ -95,8 +95,7 @@ export enum Type {
   Video = "video",
 }
 
-export interface SocketData {
-  track: Track | null;
+export interface SocketData extends Track {
   player: boolean;
   defaultVolume: number | null;
 }
