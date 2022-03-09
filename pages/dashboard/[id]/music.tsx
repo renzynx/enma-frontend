@@ -1,16 +1,15 @@
 import Controller from "@components/Controller";
-import MusicCard from "@components/MusicCard";
 import Navbar from "@components/Navbar";
-import SearchForm from "@components/SearchForm";
-import Slider from "@components/Slider";
 import useAuth from "lib/hooks/useAuth";
-import { SocketData, Track } from "lib/types";
+import { SocketData } from "lib/types";
 import withApollo from "lib/withApollo";
 import { NextPage } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { getDataFromTree } from "@apollo/client/react/ssr";
 
 let socket: any = false;
 
@@ -18,6 +17,13 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
   const uid = useAuth();
   const [data, setData] = useState<SocketData>();
   const router = useRouter();
+  const MusicCard = dynamic(() => import("@components/MusicCard"), {
+    ssr: typeof window === "undefined",
+  });
+  const SearchForm = dynamic(() => import("@components/SearchForm"), {
+    ssr: typeof window === "undefined",
+  });
+  const Slider = dynamic(() => import("@components/Slider"));
 
   const { id } = query;
   useEffect(() => {
@@ -80,4 +86,4 @@ Music.getInitialProps = async (context) => {
   };
 };
 
-export default withApollo(Music);
+export default withApollo(Music, { getDataFromTree });

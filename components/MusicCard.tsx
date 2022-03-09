@@ -1,4 +1,5 @@
 import { MusicCardProps } from "lib/types";
+import dynamic from "next/dynamic";
 import { FC } from "react";
 import YoutubeEmbed from "./Youtube";
 
