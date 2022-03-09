@@ -54,7 +54,7 @@ const Navbar = () => {
           className="dropdown-content menu menu-compact p-2 bg-base-300 shadow rounded-box w-52"
         >
           <li>
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/dashboard">My Servers</Link>
           </li>
           <li className="lg:hidden">
             <Link href="/commands">Commands</Link>
@@ -80,8 +80,8 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full items-center">
-        <nav className="navbar mx-auto max-w-[90%]">
+      <div className="w-full">
+        <nav className="navbar mx-auto lg:max-w-[80%] md:max-w-[85%] sm:max-w-[95%] max-w-[95%]">
           <div className="navbar-start">
             <Link href="/" passHref>
               <p className="font-semibold text-2xl cursor-pointer">Enma</p>

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 const useTheme = () => {
-  const [theme, setTheme] = useState<string>("dark");
+  const [theme, setTheme] = useState<string>("dracula");
 
   useEffect(() => {
-    setTheme(localStorage.getItem("theme") ?? "dark");
+    setTheme(localStorage.getItem("theme") ?? "dracula");
   }, []);
   useEffect(() => {
     localStorage.setItem("theme", theme);

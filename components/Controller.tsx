@@ -1,46 +1,88 @@
-import { FC, useEffect, useState } from "react";
+import { ControllerProps } from "lib/types";
+import { FC, useState } from "react";
 import {
   IoPause,
   IoPlay,
   IoPlaySkipBack,
   IoPlaySkipForward,
+  IoShuffle,
+  IoRepeat,
 } from "react-icons/io5";
 
-const Controller: FC<{
-  playback: () => void;
-  skip: () => void;
-  previous: () => void;
-}> = ({ playback, skip, previous }) => {
+const Controller: FC<ControllerProps> = ({
+  playback,
+  skip,
+  previous,
+  shuffle,
+}) => {
   const [state, setState] = useState("play");
-
-  const handleClick = () => {
-    if (state === "play") {
-      setState("pause");
-    } else {
-      setState("play");
-    }
-  };
 
   return (
     <>
-      <div className="fixed bottom-0 w-screen bg-base-300 py-2">
-        <div className="mx-auto flex justify-center gap-5">
-          <button className="btn btn-ghost">
+      <div className="navbar fixed bottom-0 w-[100vw] bg-base-300 py-2">
+        <div className="navbar-start" />
+        <div className="navbar-center">
+          <RateLimitButton>
             <IoPlaySkipBack onClick={previous} size="2em" />
-          </button>
-          <button className="btn btn-ghost" onClick={handleClick}>
+          </RateLimitButton>
+          <RateLimitButton>
             {state === "play" ? (
-              <IoPause size="2em" onClick={playback} />
+              <IoPause
+                size="2em"
+                onClick={() => {
+                  playback();
+                  setState("pause");
+                }}
+              />
             ) : (
-              <IoPlay size="2em" onClick={playback} />
+              <IoPlay
+                size="2em"
+                onClick={() => {
+                  playback();
+                  setState("play");
+                }}
+              />
             )}
-          </button>
-          <button className="btn btn-ghost">
-            <IoPlaySkipForward onClick={skip} size="2em" />
-          </button>
+          </RateLimitButton>
+          <RateLimitButton>
+            <IoPlaySkipForward
+              onClick={() => {
+                skip();
+              }}
+              size="2em"
+            />
+          </RateLimitButton>
+        </div>
+        <div className="navbar-end">
+          <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col">
+            <RateLimitButton>
+              <IoShuffle size="2em" onClick={shuffle} />
+            </RateLimitButton>
+            <RateLimitButton>
+              <IoRepeat size="2em" />
+            </RateLimitButton>
+          </div>
         </div>
       </div>
     </>
+  );
+};
+
+const RateLimitButton: FC = ({ children }) => {
+  const [ratelimit, setRatelimit] = useState(false);
+
+  const handleRatelimit = () => {
+    setRatelimit(true);
+    setTimeout(() => setRatelimit(false), 1500);
+  };
+
+  return (
+    <button
+      className={`btn btn-ghost ${ratelimit ? "btn-disabled cursor-wait" : ""}`}
+      onClick={handleRatelimit}
+    >
+      {children}
+    </button>
   );
 };
 

@@ -24,7 +24,7 @@ const DashboardPage = () => {
 
 const MenuLoading = () => (
   <div className="flex items-center justify-center w-screen min-h-[90vh]">
-    <MoonLoader loading={true} />
+    <MoonLoader loading={true} color="#6377f7" />
   </div>
 );
 

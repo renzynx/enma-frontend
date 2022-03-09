@@ -13,6 +13,7 @@
     "@apollo/client": "^3.5.10",
     "axios": "^0.26.0",
     "daisyui": "^2.4.0",
+    "formik": "^2.2.9",
     "graphql": "^16.3.0",
     "lodash": "^4.17.21",
     "next": "12.1.0",
@@ -24,7 +25,8 @@
     "react-spinners": "^0.11.0",
     "react-youtube": "^7.14.0",
     "sharp": "^0.30.2",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "ytsr": "^3.6.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.2",

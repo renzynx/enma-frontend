@@ -2,7 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["cdn.discordapp.com", "img.youtube.com"],
+    domains: [
+      "cdn.discordapp.com",
+      "img.youtube.com",
+      "i.ytimg.com",
+      "api.lorem.space",
+    ],
   },
   async redirects() {
     return [
