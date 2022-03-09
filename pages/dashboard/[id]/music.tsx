@@ -37,8 +37,6 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
   const handlePlay = (url: string) => socket.emit("play", { id, url, uid });
   const handleShuffle = () => socket.emit("shuffle", { id, uid });
 
-  console.log(data);
-
   return (
     <>
       <Head>
