@@ -12,8 +12,10 @@ const Slider: FC<{
     setValue(vol);
     handleVolume(vol);
     setRatelimit(true);
-    setTimeout(() => setRatelimit(false), 1500);
+    setTimeout(() => setRatelimit(false), 5000);
   };
+
+  console.log(ratelimit);
 
   return (
     <div className="my-10 w-80">
@@ -34,6 +36,7 @@ const Slider: FC<{
           className="range range-accent"
           step="25"
           onChange={(e) => handleVolumeRateLimit(e.target.value)}
+          disabled={ratelimit}
         />
         <IoVolumeHigh
           className="cursor-pointer"
