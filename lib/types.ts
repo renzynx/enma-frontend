@@ -38,14 +38,14 @@ export interface Track {
 }
 
 type Sizes =
-  | "0"
-  | "1"
-  | "2"
-  | "3"
-  | "default"
-  | "mqdefault"
-  | "hqdefault"
-  | "maxresdefault";
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | 'default'
+  | 'mqdefault'
+  | 'hqdefault'
+  | 'maxresdefault';
 
 export interface SearchProps {
   query: string;
@@ -92,7 +92,7 @@ export interface BestThumbnail {
 }
 
 export enum Type {
-  Video = "video",
+  Video = 'video',
 }
 
 export interface SocketData extends Track {
@@ -101,6 +101,7 @@ export interface SocketData extends Track {
 }
 
 export interface ControllerProps {
+  data?: SocketData;
   playback: () => void;
   skip: () => void;
   previous: () => void;

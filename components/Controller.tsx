@@ -1,5 +1,5 @@
-import { ControllerProps } from "lib/types";
-import { FC, useState } from "react";
+import { ControllerProps } from 'lib/types';
+import { FC, useState } from 'react';
 import {
   IoPause,
   IoPlay,
@@ -7,31 +7,32 @@ import {
   IoPlaySkipForward,
   IoShuffle,
   IoRepeat,
-} from "react-icons/io5";
+} from 'react-icons/io5';
 
 const Controller: FC<ControllerProps> = ({
   playback,
   skip,
   previous,
   shuffle,
+  data,
 }) => {
-  const [state, setState] = useState("play");
+  const [state, setState] = useState('play');
 
   return (
     <>
       <div className="navbar fixed bottom-0 w-[100vw] bg-base-300 py-2">
         <div className="navbar-start" />
         <div className="navbar-center">
-          <RateLimitButton>
+          <RateLimitButton disable={!data}>
             <IoPlaySkipBack onClick={previous} size="2em" />
           </RateLimitButton>
-          <RateLimitButton>
-            {state === "play" ? (
+          <RateLimitButton disable={!data}>
+            {state === 'play' ? (
               <IoPause
                 size="2em"
                 onClick={() => {
                   playback();
-                  setState("pause");
+                  setState('pause');
                 }}
               />
             ) : (
@@ -39,12 +40,12 @@ const Controller: FC<ControllerProps> = ({
                 size="2em"
                 onClick={() => {
                   playback();
-                  setState("play");
+                  setState('play');
                 }}
               />
             )}
           </RateLimitButton>
-          <RateLimitButton>
+          <RateLimitButton disable={!data}>
             <IoPlaySkipForward
               onClick={() => {
                 skip();
@@ -54,11 +55,11 @@ const Controller: FC<ControllerProps> = ({
           </RateLimitButton>
         </div>
         <div className="navbar-end">
-          <div className="flex lg:flex-row md:flex-row sm:flex-col flex-col">
-            <RateLimitButton>
+          <div className="flex lg:flex-row md:flex-row sm:flex-col sm:gap-y-2 gap-y-2 flex-col">
+            <RateLimitButton disable={!data}>
               <IoShuffle size="2em" onClick={shuffle} />
             </RateLimitButton>
-            <RateLimitButton>
+            <RateLimitButton disable={!data}>
               <IoRepeat size="2em" />
             </RateLimitButton>
           </div>
@@ -68,7 +69,7 @@ const Controller: FC<ControllerProps> = ({
   );
 };
 
-const RateLimitButton: FC = ({ children }) => {
+const RateLimitButton: FC<{ disable: boolean }> = ({ children, disable }) => {
   const [ratelimit, setRatelimit] = useState(false);
 
   const handleRatelimit = () => {
@@ -78,7 +79,10 @@ const RateLimitButton: FC = ({ children }) => {
 
   return (
     <button
-      className={`btn btn-ghost ${ratelimit ? "btn-disabled cursor-wait" : ""}`}
+      disabled={disable}
+      className={`btn btn-ghost mx-2 ${
+        ratelimit ? 'btn-disabled cursor-wait' : ''
+      }`}
       onClick={handleRatelimit}
     >
       {children}
