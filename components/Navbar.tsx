@@ -1,11 +1,11 @@
-import { useLogOutMutation, useMeQuery } from "generated/graphql";
-import { useRouter } from "next/router";
-import { getDataFromTree } from "@apollo/client/react/ssr";
-import withApollo from "lib/withApollo";
-import Image from "next/image";
-import Link from "next/link";
-import useTheme from "lib/hooks/useTheme";
-import { themes } from "lib/constants";
+import { useLogOutMutation, useMeQuery } from 'generated/graphql';
+import { useRouter } from 'next/router';
+import { getDataFromTree } from '@apollo/client/react/ssr';
+import withApollo from 'lib/withApollo';
+import Image from 'next/image';
+import Link from 'next/link';
+import useTheme from 'lib/hooks/useTheme';
+import { themes } from 'lib/constants';
 
 const Navbar = () => {
   const router = useRouter();
@@ -43,7 +43,7 @@ const Navbar = () => {
             src={
               data.me.avatar
                 ? `https://cdn.discordapp.com/avatars/${data.me.uid}/${data.me.avatar}.webp`
-                : "https://cdn.discordapp.com/embed/avatars/0.png"
+                : 'https://cdn.discordapp.com/embed/avatars/0.png'
             }
             width="38px"
             height="38px"
@@ -67,7 +67,7 @@ const Navbar = () => {
               className="hover:text-red-400"
               onClick={async () => {
                 await mutationLogOut();
-                window.location.href = "/";
+                window.location.href = '/';
                 router.reload();
               }}
             >
@@ -80,7 +80,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full sticky top-0">
         <nav className="navbar mx-auto lg:max-w-[80%] md:max-w-[85%] sm:max-w-[95%] max-w-[95%]">
           <div className="navbar-start">
             <Link href="/" passHref>
