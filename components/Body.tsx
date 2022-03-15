@@ -3,7 +3,7 @@ import { FaYoutube, FaSpotify, FaSoundcloud } from 'react-icons/fa';
 const Body = () => {
   return (
     <div className="w-screen min-h-screen flex items-center justify-center">
-      <div className="flex w-full lg:flex-row md:flex-row sm:flex-col flex-col items-center justify-around gap-5">
+      <div className="flex w-full lg:flex-row md:flex-row sm:flex-col flex-col items-center justify-around gap-5 mx-5">
         <p className="lg:text-left md:text-left sm:text-center text-center text-xl">
           Enma offers a variety of platforms to help you get the most out of
           your music experience.
