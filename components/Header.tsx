@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Header = () => {
   return (
@@ -15,7 +16,9 @@ const Header = () => {
           Enma is a music bot designed to be user friendly, simple to use.
         </h1>
         <h2>The music bot fit for every server needs.</h2>
-        <button className="btn btn-secondary">Add to Server</button>
+        <Link href="/invite" passHref>
+          <button className="btn btn-secondary">Add to Server</button>
+        </Link>
       </div>
     </div>
   );
