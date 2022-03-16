@@ -1,8 +1,8 @@
-import { GuildsQuery } from "generated/graphql";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { FC, useContext } from "react";
+import { GuildsQuery } from 'generated/graphql';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { FC, useContext } from 'react';
 
 const Menu: FC<GuildsQuery> = ({ guilds }) => {
   const router = useRouter();
@@ -10,8 +10,9 @@ const Menu: FC<GuildsQuery> = ({ guilds }) => {
   if (!guilds?.included && !guilds?.excluded)
     return (
       <div className="my-20 text-2xl text-center">
-        You don&quot;t have any guild available, you can try to create one and
+        You don&apos;t have any guild available, you can try to create one and
         come back here.
+        <p>Or if you think this is a mistake please logout and login again.</p>
       </div>
     );
 
@@ -28,7 +29,7 @@ const Menu: FC<GuildsQuery> = ({ guilds }) => {
               src={
                 icon
                   ? `https://cdn.discordapp.com/icons/${id}/${icon}.webp`
-                  : "https://cdn.discordapp.com/embed/avatars/0.png"
+                  : 'https://cdn.discordapp.com/embed/avatars/0.png'
               }
               alt={`${name}'s icon`}
               width="80px"
@@ -57,7 +58,7 @@ const Menu: FC<GuildsQuery> = ({ guilds }) => {
               src={
                 icon
                   ? `https://cdn.discordapp.com/icons/${id}/${icon}.webp?size=128`
-                  : "https://cdn.discordapp.com/embed/avatars/0.png"
+                  : 'https://cdn.discordapp.com/embed/avatars/0.png'
               }
               alt={`${name}'s icon`}
               width="80px"
