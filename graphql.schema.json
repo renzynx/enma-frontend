@@ -34,6 +34,18 @@
         "description": null,
         "fields": [
           {
+            "name": "exclude",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "features",
             "description": null,
             "args": [],
@@ -172,31 +184,7 @@
         "description": null,
         "fields": [
           {
-            "name": "excluded",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "GraphqlMutualGuilds",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "included",
+            "name": "guilds",
             "description": null,
             "args": [],
             "type": {
@@ -231,7 +219,7 @@
         "description": null,
         "fields": [
           {
-            "name": "guilds",
+            "name": "getGuilds",
             "description": null,
             "args": [],
             "type": {

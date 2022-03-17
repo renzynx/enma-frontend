@@ -35,10 +35,11 @@ const Navbar = () => {
     );
   if (data)
     body = (
-      <div className="dropdown dropdown-end">
-        <label tabIndex={0}>
+      <div className="">
+        <div className="dropdown dropdown-end">
           <Image
-            className="rounded-full cursor-pointer"
+            tabIndex={0}
+            className="btn btn-circle btn-ghost btn-lg"
             alt={`${data.me.username}'s avatar`}
             src={
               data.me.avatar
@@ -48,46 +49,46 @@ const Navbar = () => {
             width="38px"
             height="38px"
           />
-        </label>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu menu-compact p-2 bg-base-300 shadow rounded-box w-52"
-        >
-          <li>
-            <Link href="/dashboard">My Servers</Link>
-          </li>
-          <li className="lg:hidden">
-            <Link href="/commands">Commands</Link>
-          </li>
-          <li className="lg:hidden">
-            <Link href="/invite">Invite Enma</Link>
-          </li>
-          <li>
-            <p
-              className="hover:text-red-400"
-              onClick={async () => {
-                await mutationLogOut();
-                window.location.href = '/';
-                router.reload();
-              }}
-            >
-              Sign out
-            </p>
-          </li>
-        </ul>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu menu-compact p-2 bg-base-300 shadow rounded-box w-52"
+          >
+            <li>
+              <Link href="/dashboard">My Servers</Link>
+            </li>
+            <li className="lg:hidden">
+              <Link href="/commands">Commands</Link>
+            </li>
+            <li className="lg:hidden">
+              <Link href="/invite">Invite Enma</Link>
+            </li>
+            <li>
+              <p
+                className="hover:text-red-400"
+                onClick={async () => {
+                  await mutationLogOut();
+                  window.location.href = '/';
+                  router.reload();
+                }}
+              >
+                Sign out
+              </p>
+            </li>
+          </ul>
+        </div>
       </div>
     );
 
   return (
     <>
-      <div className="w-full sticky top-0">
+      <div className="w-full sticky top-0 z-50">
         <nav className="navbar mx-auto lg:max-w-[80%] md:max-w-[85%] sm:max-w-[95%] max-w-[95%]">
-          <div className="navbar-start">
+          <div className="flex-1">
             <Link href="/" passHref>
               <p className="font-semibold text-2xl cursor-pointer">Enma</p>
             </Link>
           </div>
-          <div className="navbar-center">
+          <div className="flex-1">
             <ul className="lg:flex gap-5  md:hidden sm:hidden hidden">
               <Link href="/commands" passHref>
                 <li className="link link-hover link-primary">Commands</li>
@@ -97,9 +98,12 @@ const Navbar = () => {
               </Link>
             </ul>
           </div>
-          <div className="navbar-end">
+          <div className="flex-none">
             <div className="dropdown dropdown-end mr-5">
-              <div className="btn gap-2 normal-case btn-ghost" tabIndex={0}>
+              <div
+                className="btn btn-md gap-2 normal-case btn-ghost"
+                tabIndex={0}
+              >
                 <SelectThemeSVG />
                 <span className="hidden md:inline">Change Theme</span>
                 <ArrowDownSVG />
@@ -152,4 +156,4 @@ const ArrowDownSVG = () => (
   </svg>
 );
 
-export default withApollo(Navbar, { getDataFromTree });
+export default Navbar;

@@ -1,5 +1,5 @@
-query Guilds {
-  guilds {
+query MutualGuilds {
+  getGuilds {
     ...RegularGuilds
   }
 }

@@ -17,6 +17,7 @@ export type Scalars = {
 
 export type GraphqlMutualGuilds = {
   __typename?: 'GraphqlMutualGuilds';
+  exclude?: Maybe<Scalars['Boolean']>;
   features: Array<Scalars['String']>;
   icon?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -32,13 +33,12 @@ export type Mutation = {
 
 export type MutualGuilds = {
   __typename?: 'MutualGuilds';
-  excluded: Array<GraphqlMutualGuilds>;
-  included: Array<GraphqlMutualGuilds>;
+  guilds: Array<GraphqlMutualGuilds>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  guilds?: Maybe<MutualGuilds>;
+  getGuilds?: Maybe<MutualGuilds>;
   me: UserInfo;
 };
 
@@ -50,7 +50,7 @@ export type UserInfo = {
   username: Scalars['String'];
 };
 
-export type RegularGuildsFragment = { __typename?: 'MutualGuilds', included: Array<{ __typename?: 'GraphqlMutualGuilds', id: string, name: string, icon?: string | null }>, excluded: Array<{ __typename?: 'GraphqlMutualGuilds', id: string, name: string, icon?: string | null }> };
+export type RegularGuildsFragment = { __typename?: 'MutualGuilds', guilds: Array<{ __typename?: 'GraphqlMutualGuilds', id: string, name: string, icon?: string | null, exclude?: boolean | null }> };
 
 export type RegularUserFragment = { __typename?: 'UserInfo', id: number, uid: string, username: string, avatar: string };
 
@@ -59,10 +59,10 @@ export type LogOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type LogOutMutation = { __typename?: 'Mutation', logout: boolean };
 
-export type GuildsQueryVariables = Exact<{ [key: string]: never; }>;
+export type MutualGuildsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GuildsQuery = { __typename?: 'Query', guilds?: { __typename?: 'MutualGuilds', included: Array<{ __typename?: 'GraphqlMutualGuilds', id: string, name: string, icon?: string | null }>, excluded: Array<{ __typename?: 'GraphqlMutualGuilds', id: string, name: string, icon?: string | null }> } | null };
+export type MutualGuildsQuery = { __typename?: 'Query', getGuilds?: { __typename?: 'MutualGuilds', guilds: Array<{ __typename?: 'GraphqlMutualGuilds', id: string, name: string, icon?: string | null, exclude?: boolean | null }> } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -71,15 +71,11 @@ export type MeQuery = { __typename?: 'Query', me: { __typename?: 'UserInfo', id:
 
 export const RegularGuildsFragmentDoc = gql`
     fragment RegularGuilds on MutualGuilds {
-  included {
+  guilds {
     id
     name
     icon
-  }
-  excluded {
-    id
-    name
-    icon
+    exclude
   }
 }
     `;
@@ -121,40 +117,40 @@ export function useLogOutMutation(baseOptions?: Apollo.MutationHookOptions<LogOu
 export type LogOutMutationHookResult = ReturnType<typeof useLogOutMutation>;
 export type LogOutMutationResult = Apollo.MutationResult<LogOutMutation>;
 export type LogOutMutationOptions = Apollo.BaseMutationOptions<LogOutMutation, LogOutMutationVariables>;
-export const GuildsDocument = gql`
-    query Guilds {
-  guilds {
+export const MutualGuildsDocument = gql`
+    query MutualGuilds {
+  getGuilds {
     ...RegularGuilds
   }
 }
     ${RegularGuildsFragmentDoc}`;
 
 /**
- * __useGuildsQuery__
+ * __useMutualGuildsQuery__
  *
- * To run a query within a React component, call `useGuildsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGuildsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMutualGuildsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMutualGuildsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGuildsQuery({
+ * const { data, loading, error } = useMutualGuildsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGuildsQuery(baseOptions?: Apollo.QueryHookOptions<GuildsQuery, GuildsQueryVariables>) {
+export function useMutualGuildsQuery(baseOptions?: Apollo.QueryHookOptions<MutualGuildsQuery, MutualGuildsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GuildsQuery, GuildsQueryVariables>(GuildsDocument, options);
+        return Apollo.useQuery<MutualGuildsQuery, MutualGuildsQueryVariables>(MutualGuildsDocument, options);
       }
-export function useGuildsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GuildsQuery, GuildsQueryVariables>) {
+export function useMutualGuildsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MutualGuildsQuery, MutualGuildsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GuildsQuery, GuildsQueryVariables>(GuildsDocument, options);
+          return Apollo.useLazyQuery<MutualGuildsQuery, MutualGuildsQueryVariables>(MutualGuildsDocument, options);
         }
-export type GuildsQueryHookResult = ReturnType<typeof useGuildsQuery>;
-export type GuildsLazyQueryHookResult = ReturnType<typeof useGuildsLazyQuery>;
-export type GuildsQueryResult = Apollo.QueryResult<GuildsQuery, GuildsQueryVariables>;
+export type MutualGuildsQueryHookResult = ReturnType<typeof useMutualGuildsQuery>;
+export type MutualGuildsLazyQueryHookResult = ReturnType<typeof useMutualGuildsLazyQuery>;
+export type MutualGuildsQueryResult = Apollo.QueryResult<MutualGuildsQuery, MutualGuildsQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {

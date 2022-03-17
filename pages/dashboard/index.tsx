@@ -1,23 +1,23 @@
-import { getDataFromTree } from "@apollo/client/react/ssr";
-import Menu from "@components/Menu";
-import Navbar from "@components/Navbar";
-import { useGuildsQuery } from "generated/graphql";
-import useAuth from "lib/hooks/useAuth";
-import withApollo from "lib/withApollo";
-import Head from "next/head";
-import { MoonLoader } from "react-spinners";
+import { getDataFromTree } from '@apollo/client/react/ssr';
+import Menu from '@components/Menu';
+import Navbar from '@components/Navbar';
+import { useMutualGuildsQuery } from 'generated/graphql';
+import useAuth from 'lib/hooks/useAuth';
+import withApollo from 'lib/withApollo';
+import Head from 'next/head';
+import { MoonLoader } from 'react-spinners';
 
 const DashboardPage = () => {
   useAuth();
+  const { data, loading } = useMutualGuildsQuery();
 
-  const { data, loading } = useGuildsQuery();
   return (
     <>
       <Head>
         <title>Enma | Dashboard</title>
       </Head>
       <Navbar />
-      {loading ? <MenuLoading /> : <Menu guilds={data?.guilds} />}
+      {loading ? <MenuLoading /> : <Menu guilds={data?.getGuilds?.guilds} />}
     </>
   );
 };

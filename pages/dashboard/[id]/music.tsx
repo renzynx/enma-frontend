@@ -13,7 +13,7 @@ import { getDataFromTree } from '@apollo/client/react/ssr';
 
 let socket: any = false;
 
-const Music: NextPage<{ query: any }> = ({ query }) => {
+const Music: NextPage = () => {
   const uid = useAuth();
   const [data, setData] = useState<SocketData>();
   const router = useRouter();
@@ -21,7 +21,7 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
   const SearchForm = dynamic(() => import('@components/SearchForm'));
   const Slider = dynamic(() => import('@components/Slider'));
 
-  const { id } = query;
+  const { id } = router.query;
   useEffect(() => {
     if (!socket) socket = io(process.env.NEXT_PUBLIC_WS!);
   }, [router]);
@@ -75,12 +75,6 @@ const Music: NextPage<{ query: any }> = ({ query }) => {
       />
     </>
   );
-};
-
-Music.getInitialProps = async (context) => {
-  return {
-    query: context.query,
-  };
 };
 
 export default withApollo(Music, { getDataFromTree });

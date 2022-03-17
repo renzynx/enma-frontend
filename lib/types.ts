@@ -107,3 +107,15 @@ export interface ControllerProps {
   previous: () => void;
   shuffle: () => void;
 }
+
+export interface MenuProps {
+  guilds:
+    | {
+        __typename?: 'GraphqlMutualGuilds' | undefined;
+        id: string;
+        name: string;
+        icon?: string | null | undefined;
+        exclude?: boolean | null | undefined;
+      }[]
+    | undefined;
+}

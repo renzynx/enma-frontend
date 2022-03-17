@@ -1,12 +1,8 @@
 fragment RegularGuilds on MutualGuilds {
-  included {
+  guilds {
     id
     name
     icon
-  }
-  excluded {
-    id
-    name
-    icon
+    exclude
   }
 }
